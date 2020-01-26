@@ -1,5 +1,6 @@
 import com.grooptown.ia.robotturtles.PlayerConnector;
 import com.grooptown.snorkunking.service.engine.game.Game;
+import com.grooptown.snorkunking.service.engine.player.Player;
 import com.grooptown.snorkunking.service.engine.player.PlayerSecret;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
@@ -18,9 +19,10 @@ public class OnePlayerAloneTest {
     public static void main(String[] args) throws Exception {
         // With JDK inferior to 8u101 you need to disable SSL validation.
         disableSSLValidation();
-        PlayerConnector.baseUrl = "http://localhost:8080";
+        // PlayerConnector.baseUrl = "http://localhost:8080";
+        PlayerConnector.baseUrl = "https://robot-turtles.grooptown.com/";
 
-        int gameId = 66;
+        int gameId = 43;
         String playerName = "Player-" + UUID.randomUUID();
 
         PlayerConnector playerConnector = new PlayerConnector(gameId);
@@ -49,7 +51,7 @@ public class OnePlayerAloneTest {
             try {
                 Game game = PlayerConnector.getGameState(gameId);
                 if (game.isStarted()
-                    && Utils.getCurrentPlayer(game).getPlayerName().equals(playerConnector.getPlayer().getPlayerFromInstance(game).getPlayerName())) {
+                    && getCurrentPlayer(game).getPlayerName().equals(playerConnector.getPlayer().getPlayerFromInstance(game).getPlayerName())) {
                     return;
                 }
             } catch (HttpClientErrorException e) {
@@ -61,5 +63,8 @@ public class OnePlayerAloneTest {
         }
     }
 
+    public static Player getCurrentPlayer(Game game) {
+        return game.getPlayers().get(game.getCurrentIdPlayerTurn());
+    }
 
 }
