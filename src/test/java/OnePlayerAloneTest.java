@@ -19,10 +19,10 @@ public class OnePlayerAloneTest {
     public static void main(String[] args) throws Exception {
         // With JDK inferior to 8u101 you need to disable SSL validation.
         disableSSLValidation();
-        // PlayerConnector.baseUrl = "http://localhost:8080";
-        PlayerConnector.baseUrl = "https://robot-turtles.grooptown.com/";
+        PlayerConnector.baseUrl = "http://localhost:8080";
+        // PlayerConnector.baseUrl = "https://robot-turtles.grooptown.com/";
 
-        int gameId = 43;
+        int gameId = 91;
         String playerName = "Player-" + UUID.randomUUID();
 
         PlayerConnector playerConnector = new PlayerConnector(gameId);
